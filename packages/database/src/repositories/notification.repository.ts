@@ -1,6 +1,6 @@
 import { BaseRepository } from './base.repository';
 import type { PaginationParams, PaginatedResult } from './user.repository';
-import type { Prisma } from '@prisma/client';
+import type { Prisma, $Enums } from '@prisma/client';
 
 export interface CreateNotificationData {
   userId: string;
@@ -51,7 +51,7 @@ export class NotificationRepository extends BaseRepository {
     return this.prisma.notification.create({
       data: {
         userId: data.userId,
-        type: data.type as Prisma.EnumNotificationTypeFilter['equals'],
+        type: data.type as $Enums.NotificationType,
         title: data.title,
         message: data.message,
         data: data.data as Prisma.InputJsonValue ?? undefined,
@@ -63,7 +63,7 @@ export class NotificationRepository extends BaseRepository {
     return this.prisma.notification.createMany({
       data: data.map(n => ({
         userId: n.userId,
-        type: n.type,
+        type: n.type as $Enums.NotificationType,
         title: n.title,
         message: n.message,
         data: n.data as Prisma.InputJsonValue ?? undefined,
