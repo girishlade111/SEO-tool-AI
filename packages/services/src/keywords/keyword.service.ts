@@ -2,6 +2,7 @@ import { KeywordRepository } from '@lade/database';
 import { NotFoundError } from '@lade/shared';
 import type { Keyword, PaginationParams, SearchIntent } from '@lade/shared';
 import { logger } from '@lade/config';
+import type { Prisma } from '@lade/database';
 
 export class KeywordService {
   constructor(private readonly keywordRepo: KeywordRepository) {}
@@ -13,7 +14,7 @@ export class KeywordService {
   async getById(id: string): Promise<Keyword> {
     const keyword = await this.keywordRepo.findById(id);
     if (!keyword || keyword.deletedAt) throw new NotFoundError('Keyword', id);
-    return keyword;
+    return keyword as unknown as Keyword;
   }
 
   async addKeywords(projectId: string, keywords: Array<{ keyword: string; intent?: SearchIntent }>) {
@@ -26,10 +27,10 @@ export class KeywordService {
         difficulty: 0,
         cpc: 0,
         competition: 0,
-        serpFeatures: [],
+        serpFeatures: [] as Prisma.InputJsonValue,
       }))
     );
-    logger.info('Keywords added', { projectId, count: created.length });
+    logger.info('Keywords added', { projectId, count: created.count });
     return created;
   }
 

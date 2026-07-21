@@ -1,6 +1,5 @@
 import { NotificationRepository } from '@lade/database';
 import type { Notification, PaginationParams, NotificationType } from '@lade/shared';
-import { logger } from '@lade/config';
 
 export class NotificationService {
   constructor(private readonly notifRepo: NotificationRepository) {}
@@ -20,7 +19,8 @@ export class NotificationService {
     message: string,
     data?: Record<string, unknown>
   ): Promise<Notification> {
-    return this.notifRepo.create({ userId, type, title, message, data });
+    const result = await this.notifRepo.create({ userId, type, title, message, data });
+    return result as unknown as Notification;
   }
 
   async sendBulk(
