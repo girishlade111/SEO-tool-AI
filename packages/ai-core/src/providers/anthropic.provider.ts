@@ -1,12 +1,12 @@
-import type { AIRequest, AIResponse, AIMessage, StreamChunk } from '../types';
+import type { AIRequest, AIResponse, AIMessage, StreamChunk, AIProvider, AIModel } from '../types';
 import type { AIProviderInterface } from './provider.interface';
 import { getModelConfig } from '../models';
 import { costTracker } from '../cost-tracker';
 import { logger } from '@lade/config';
 
 export class AnthropicProvider implements AIProviderInterface {
-  readonly name = 'anthropic';
-  readonly supportedModels = ['claude-3.5-sonnet', 'claude-3.5-haiku'];
+  readonly name: AIProvider = 'anthropic';
+  readonly supportedModels: AIModel[] = ['claude-3.5-sonnet', 'claude-3.5-haiku'];
   private apiKey = '';
   private baseUrl = 'https://api.anthropic.com/v1';
   private timeoutMs = 60000;
@@ -41,7 +41,7 @@ export class AnthropicProvider implements AIProviderInterface {
     return {
       content,
       model: request.model,
-      provider: this.name as AIProviderInterface['name'],
+      provider: this.name,
       usage,
       latencyMs,
       finishReason: data.stop_reason === 'end_turn' ? 'stop' : data.stop_reason ?? 'stop',
