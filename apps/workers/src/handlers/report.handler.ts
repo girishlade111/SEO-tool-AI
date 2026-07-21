@@ -1,5 +1,6 @@
 import { ReportRepository, AnalysisRepository } from '@lade/database';
 import { providerRegistry, promptManager } from '@lade/ai-core';
+import { logger } from '@lade/config';
 import type { Job } from '../types';
 
 const reportRepo = new ReportRepository();
