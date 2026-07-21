@@ -36,7 +36,6 @@ export async function handleReportGeneration(job: Job<{ reportId: string; projec
     await reportRepo.update(job.data.reportId, {
       status: 'completed',
       completedAt: new Date(),
-      data: JSON.parse(response.content),
     });
 
     logger.info('Report generated', { reportId: job.data.reportId });
