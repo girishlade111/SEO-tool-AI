@@ -89,7 +89,7 @@ The platform starts as a well-structured modular monolith deployed on Vercel (fr
 | Cache | Redis (Upstash/Vercel KV) | Low-latency caching, rate limiting |
 | Queue | BullMQ | Redis-based, reliable, delayed jobs |
 | Auth | NextAuth.js v5 | Flexible auth providers |
-| AI SDK | Vercel AI SDK | Streaming, multi-provider, tool calling |
+| AI SDK | Native OpenAI + Anthropic SDKs | Direct provider integration via ai-core |
 | Payments | Stripe | Billing, subscriptions, invoices |
 | Email | Resend | Transactional email, React Email |
 | Background Jobs | Dedicated worker (Vercel or Docker) | Heavy processing |
