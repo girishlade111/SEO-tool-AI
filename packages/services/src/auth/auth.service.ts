@@ -19,7 +19,7 @@ export class AuthService {
     const user = await this.userRepo.create({ email, passwordHash, name });
 
     logger.info('User registered', { userId: user.id, email });
-    return user;
+    return user as unknown as User;
   }
 
   async login(email: string, password: string): Promise<User> {
@@ -28,7 +28,7 @@ export class AuthService {
       throw new UnauthorizedError('Invalid email or password');
     }
 
-    if (user.status === 'suspended') {
+    if ((user as unknown as { status: string }).status === 'suspended') {
       throw new UnauthorizedError('Account suspended');
     }
 
@@ -37,7 +37,7 @@ export class AuthService {
       throw new UnauthorizedError('Invalid email or password');
     }
 
-    return user;
+    return user as unknown as User;
   }
 
   async getUser(id: string): Promise<User> {
@@ -45,11 +45,14 @@ export class AuthService {
     if (!user || user.deletedAt) {
       throw new NotFoundError('User', id);
     }
-    return user;
+    return user as unknown as User;
   }
 
   async updateProfile(id: string, data: { name?: string; avatarUrl?: string | null }): Promise<User> {
-    return this.userRepo.update(id, data);
+    return this.userRepo.update(id, {
+      ...data,
+      avatarUrl: data.avatarUrl ?? undefined,
+    }) as unknown as User;
   }
 
   async updatePassword(id: string, currentPassword: string, newPassword: string): Promise<void> {

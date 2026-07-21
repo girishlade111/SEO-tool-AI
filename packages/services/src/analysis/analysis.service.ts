@@ -1,6 +1,6 @@
 import { AnalysisRepository } from '@lade/database';
 import { NotFoundError } from '@lade/shared';
-import type { Analysis, PaginationParams, AnalysisType } from '@lade/shared';
+import type { Analysis, PaginationParams, AnalysisType, AnalysisSummary } from '@lade/shared';
 import { logger } from '@lade/config';
 import { SeoScorerService } from './seo-scorer.service';
 
@@ -22,13 +22,13 @@ export class AnalysisService {
     });
 
     logger.info('Analysis triggered', { analysisId: analysis.id, projectId, type, triggeredBy });
-    return analysis;
+    return analysis as unknown as Analysis;
   }
 
   async getAnalysis(id: string): Promise<Analysis> {
     const analysis = await this.analysisRepo.findById(id);
     if (!analysis) throw new NotFoundError('Analysis', id);
-    return analysis;
+    return analysis as unknown as Analysis;
   }
 
   async listAnalyses(projectId: string, params: PaginationParams) {
@@ -36,7 +36,8 @@ export class AnalysisService {
   }
 
   async getLatestAnalysis(projectId: string): Promise<Analysis | null> {
-    return this.analysisRepo.getLatestByProjectId(projectId);
+    const result = await this.analysisRepo.getLatestByProjectId(projectId);
+    return result as unknown as Analysis | null;
   }
 
   async getTrend(projectId: string, limit = 10) {
