@@ -1,6 +1,6 @@
 import { BaseRepository } from './base.repository';
 import type { PaginationParams, PaginatedResult } from './user.repository';
-import type { Prisma } from '@prisma/client';
+import type { Prisma, $Enums } from '@prisma/client';
 
 export interface CreateAnalysisData {
   projectId: string;
@@ -202,7 +202,7 @@ export class AnalysisRepository extends BaseRepository {
       data: {
         pageAnalysisId: data.pageAnalysisId,
         type: data.type,
-        category: data.category as Prisma.EnumIssueCategoryFilter['equals'],
+        category: data.category as $Enums.IssueCategory,
         code: data.code,
         message: data.message,
         selector: data.selector,
