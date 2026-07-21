@@ -223,13 +223,14 @@ export class AiRepository extends BaseRepository {
     const completed = generations.filter(g => g.status === 'completed').length;
     const failed = generations.filter(g => g.status === 'failed').length;
 
-    const byModel = generations.reduce<Record<string, { count: number; cost: number; tokens: number }>>((acc, g) => {
-      if (!acc[g.model]) acc[g.model] = { count: 0, cost: 0, tokens: 0 };
-      acc[g.model].count++;
-      acc[g.model].cost += g.cost;
-      acc[g.model].tokens += g.inputTokens + g.outputTokens;
-      return acc;
-    }, {});
+    const byModel: Record<string, { count: number; cost: number; tokens: number }> = {};
+    for (const g of generations) {
+      if (!byModel[g.model]) byModel[g.model] = { count: 0, cost: 0, tokens: 0 };
+      const entry = byModel[g.model]!;
+      entry.count++;
+      entry.cost += g.cost;
+      entry.tokens += g.inputTokens + g.outputTokens;
+    }
 
     return {
       totalGenerations,
