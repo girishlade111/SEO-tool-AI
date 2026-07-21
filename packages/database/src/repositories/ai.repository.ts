@@ -166,7 +166,7 @@ export class AiRepository extends BaseRepository {
       where: { id },
       data: {
         ...data,
-        status: data.status as Prisma.EnumAiGenerationStatusFilter['equals'] ?? undefined,
+        status: data.status as $Enums.AiGenerationStatus | undefined,
       },
     });
   }

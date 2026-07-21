@@ -188,7 +188,7 @@ export class AnalysisRepository extends BaseRepository {
     }
 
     if (params?.category) {
-      where.category = params.category as Prisma.EnumIssueCategoryFilter['equals'];
+      where.category = params.category as $Enums.IssueCategory;
     }
 
     return this.prisma.pageIssue.findMany({

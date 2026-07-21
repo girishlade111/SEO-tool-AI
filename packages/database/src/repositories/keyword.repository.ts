@@ -1,6 +1,6 @@
 import { BaseRepository } from './base.repository';
 import type { PaginationParams, PaginatedResult } from './user.repository';
-import type { Prisma } from '@prisma/client';
+import type { Prisma, $Enums } from '@prisma/client';
 
 export interface CreateKeywordData {
   projectId: string;
@@ -74,7 +74,7 @@ export class KeywordRepository extends BaseRepository {
     };
 
     if (params.intent) {
-      where.intent = params.intent as Prisma.EnumSearchIntentFilter['equals'];
+      where.intent = params.intent as $Enums.SearchIntent;
     }
 
     if (params.minVolume !== undefined) {
@@ -201,7 +201,7 @@ export class KeywordRepository extends BaseRepository {
         keywordId: data.keywordId,
         position: data.position,
         url: data.url,
-        searchEngine: data.searchEngine as Prisma.EnumSearchEngineFilter['equals'] ?? 'google',
+        searchEngine: (data.searchEngine ?? 'google') as $Enums.SearchEngine,
         location: data.location ?? 'US',
         trackedAt: data.trackedAt ?? this.now(),
       },
@@ -212,7 +212,7 @@ export class KeywordRepository extends BaseRepository {
     const where: Prisma.KeywordRankingWhereInput = { keywordId };
 
     if (params?.searchEngine) {
-      where.searchEngine = params.searchEngine as Prisma.EnumSearchEngineFilter['equals'];
+      where.searchEngine = params.searchEngine as $Enums.SearchEngine;
     }
 
     return this.prisma.keywordRanking.findMany({

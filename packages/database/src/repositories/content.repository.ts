@@ -1,6 +1,6 @@
 import { BaseRepository } from './base.repository';
 import type { PaginationParams, PaginatedResult } from './user.repository';
-import type { Prisma } from '@prisma/client';
+import type { Prisma, $Enums } from '@prisma/client';
 
 export interface CreateContentData {
   projectId: string;
@@ -70,11 +70,11 @@ export class ContentRepository extends BaseRepository {
     };
 
     if (params.type) {
-      where.type = params.type as Prisma.EnumContentTypeFilter['equals'];
+      where.type = params.type as $Enums.ContentType;
     }
 
     if (params.status) {
-      where.status = params.status as Prisma.EnumContentStatusFilter['equals'];
+      where.status = params.status as $Enums.ContentStatus;
     }
 
     const [data, total] = await Promise.all([
