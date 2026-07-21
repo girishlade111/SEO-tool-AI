@@ -39,7 +39,7 @@ export class ContentService {
       content: data.content ?? '',
       metaTitle: data.metaTitle ?? data.title,
       metaDescription: data.metaDescription ?? '',
-      targetKeyword: data.targetKeyword ?? null,
+      targetKeyword: data.targetKeyword,
       createdBy: userId,
       updatedBy: userId,
     }) as unknown as Content;
