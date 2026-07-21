@@ -1,17 +1,14 @@
 import { ReportRepository, AnalysisRepository } from '@lade/database';
-import { ReportService } from '@lade/services';
 import { providerRegistry, promptManager } from '@lade/ai-core';
-import { logger } from '@lade/config';
 import type { Job } from '../types';
 
 const reportRepo = new ReportRepository();
 const analysisRepo = new AnalysisRepository();
-const reportService = new ReportService(reportRepo);
 
 export async function handleReportGeneration(job: Job<{ reportId: string; projectId: string; type: string }>): Promise<void> {
   logger.info('Generating report', { reportId: job.data.reportId });
 
-  const analyses = await analysisRepo.findByProjectId(job.data.projectId, { page: 1, limit: 10 });
+  const analyses = await analysisRepo.findByProjectId(job.data.projectId, { page: 1, pageSize: 10 });
   const latestAnalysis = analyses.data?.[0];
 
   if (!latestAnalysis) {
