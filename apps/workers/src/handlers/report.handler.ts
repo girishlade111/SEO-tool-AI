@@ -27,7 +27,7 @@ export async function handleReportGeneration(job: Job<{ reportId: string; projec
   });
 
   try {
-    const response = await providerRegistry.generate({
+    await providerRegistry.generate({
       model: 'gpt-4o-mini',
       messages: [{ role: 'user', content: prompt.rendered }],
       responseFormat: 'json',
