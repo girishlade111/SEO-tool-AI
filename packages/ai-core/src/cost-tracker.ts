@@ -1,6 +1,5 @@
 import type { TokenUsage, AIModel } from './types';
 import { getModelConfig } from './models';
-import { logger } from '@lade/config';
 
 export class CostTracker {
   private sessionCost: number = 0;
