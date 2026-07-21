@@ -1,0 +1,26 @@
+
+> @lade/services@1.0.0 typecheck C:\Users\Girish Lade\OneDrive\Desktop\SEO-tool-AI\packages\services
+> tsc --noEmit
+
+src/analysis/analysis.service.ts(3,57): error TS6196: 'AnalysisSummary' is declared but never used.
+src/analysis/analysis.service.ts(21,7): error TS2322: Type 'null' is not assignable to type 'number | undefined'.
+src/content/content.service.ts(16,5): error TS2322: Type '{ _count: { versions: number; }; createdByUser: { name: string; id: string; email: string; }; updatedByUser: { name: string; id: string; email: string; }; } & { id: string; status: ContentStatus; ... 15 more ...; publishedAt: Date | null; }' is not assignable to type 'Content'.
+  Types of property 'content' are incompatible.
+    Type 'string | null' is not assignable to type 'string'.
+      Type 'null' is not assignable to type 'string'.
+src/content/content.service.ts(42,7): error TS2322: Type 'string | null' is not assignable to type 'string | undefined'.
+  Type 'null' is not assignable to type 'string | undefined'.
+src/content/content.service.ts(53,11): error TS6133: 'content' is declared but its value is never read.
+src/content/content.service.ts(68,7): error TS2353: Object literal may only specify known properties, and 'version' does not exist in type 'CreateVersionData'.
+src/keywords/keyword.service.ts(5,15): error TS2724: '"@lade/database"' has no exported member named 'Prisma'. Did you mean 'prisma'?
+src/projects/project.service.ts(38,7): error TS2322: Type 'string | null' is not assignable to type 'string | undefined'.
+  Type 'null' is not assignable to type 'string | undefined'.
+src/projects/project.service.ts(39,7): error TS2322: Type 'Partial<ProjectSettings> | null' is not assignable to type 'Record<string, unknown> | undefined'.
+  Type 'null' is not assignable to type 'Record<string, unknown> | undefined'.
+src/projects/project.service.ts(76,29): error TS6133: 'userId' is declared but its value is never read.
+src/projects/project.service.ts(76,45): error TS6133: 'userRole' is declared but its value is never read.
+src/reports/report.service.ts(29,7): error TS2322: Type 'ReportConfig' is not assignable to type 'Record<string, unknown>'.
+  Index signature for type 'string' is missing in type 'ReportConfig'.
+src/reports/report.service.ts(40,7): error TS2322: Type 'ReportConfig' is not assignable to type 'Record<string, unknown>'.
+  Index signature for type 'string' is missing in type 'ReportConfig'.
+ ELIFECYCLE  Command failed with exit code 2.
