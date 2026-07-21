@@ -30,11 +30,11 @@ async function getRedisClient() {
         const data = await res.json() as { result?: string };
         return data.result ?? null;
       },
-      async set(key: string, value: string, opts: { ex: number }) {
+      async set(key: string, value: string) {
         await fetch(`${url}/set/${key}`, {
           method: 'POST',
           headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-          body: JSON.stringify(value, null, undefined),
+          body: JSON.stringify(value),
         });
       },
     };
