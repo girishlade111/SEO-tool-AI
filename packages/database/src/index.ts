@@ -69,6 +69,7 @@ export type {
 
 export type {
   CreateReportData,
+  UpdateReportData,
 } from './repositories/report.repository';
 
 export type {

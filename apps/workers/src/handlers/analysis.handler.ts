@@ -1,12 +1,10 @@
 import { AnalysisRepository } from '@lade/database';
-import { AnalysisService, SeoScorerService } from '@lade/services';
 import { providerRegistry, registerPrompts, promptManager } from '@lade/ai-core';
 import { logger } from '@lade/config';
 import type { Job } from '../types';
 
 const analysisRepo = new AnalysisRepository();
 const seoScorer = new SeoScorerService();
-const analysisService = new AnalysisService(analysisRepo, seoScorer);
 
 registerPrompts();
 

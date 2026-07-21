@@ -11,6 +11,12 @@ export interface CreateReportData {
   schedule: string;
 }
 
+export interface UpdateReportData {
+  status?: string;
+  completedAt?: Date;
+  data?: Record<string, unknown>;
+}
+
 export class ReportRepository extends BaseRepository {
   findById(id: string) {
     return this.prisma.report.findUnique({ where: { id } });
@@ -55,5 +61,15 @@ export class ReportRepository extends BaseRepository {
 
   delete(id: string) {
     return this.prisma.report.delete({ where: { id } });
+  }
+
+  update(id: string, data: UpdateReportData) {
+    return this.prisma.report.update({
+      where: { id },
+      data: {
+        ...data,
+        data: data.data as Prisma.InputJsonValue | undefined,
+      },
+    });
   }
 }

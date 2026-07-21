@@ -126,6 +126,17 @@ export class AnalysisRepository extends BaseRepository {
     });
   }
 
+  async update(id: string, data: UpdateAnalysisData) {
+    return this.prisma.analysis.update({
+      where: { id },
+      data: {
+        ...data,
+        summary: data.summary as Prisma.InputJsonValue | undefined,
+        updatedAt: this.now(),
+      },
+    });
+  }
+
   getLatestByProjectId(projectId: string) {
     return this.prisma.analysis.findFirst({
       where: { projectId, status: 'completed' },
