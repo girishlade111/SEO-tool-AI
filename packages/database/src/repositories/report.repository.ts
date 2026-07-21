@@ -14,7 +14,8 @@ export interface CreateReportData {
 export interface UpdateReportData {
   status?: string;
   completedAt?: Date;
-  data?: Record<string, unknown>;
+  fileUrl?: string;
+  config?: Record<string, unknown>;
 }
 
 export class ReportRepository extends BaseRepository {
@@ -68,7 +69,7 @@ export class ReportRepository extends BaseRepository {
       where: { id },
       data: {
         ...data,
-        data: data.data as Prisma.InputJsonValue | undefined,
+        config: data.config as Prisma.InputJsonValue | undefined,
       },
     });
   }
