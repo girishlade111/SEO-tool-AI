@@ -1,6 +1,6 @@
 import { BaseRepository } from './base.repository';
 import type { PaginationParams, PaginatedResult } from './user.repository';
-import type { Prisma } from '@prisma/client';
+import type { Prisma, $Enums } from '@prisma/client';
 
 export interface CreateConversationData {
   userId: string;
@@ -122,7 +122,7 @@ export class AiRepository extends BaseRepository {
       const message = await tx.aiMessage.create({
         data: {
           conversationId: data.conversationId,
-          role: data.role as Prisma.EnumAiMessageRoleFilter['equals'],
+          role: data.role as $Enums.AiMessageRole,
           content: data.content,
           metadata: (data.metadata ?? {}) as Prisma.InputJsonValue,
           tokenCount: data.tokenCount ?? 0,
@@ -154,7 +154,7 @@ export class AiRepository extends BaseRepository {
       data: {
         userId: data.userId,
         projectId: data.projectId,
-        type: data.type as Prisma.EnumAiGenerationTypeFilter['equals'],
+        type: data.type as $Enums.AiGenerationType,
         prompt: data.prompt,
         model: data.model,
       },
