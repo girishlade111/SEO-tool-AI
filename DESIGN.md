@@ -33,7 +33,7 @@ C4Context
     }
   }
   
-  System_Ext(AIProviders, "AI Providers", "OpenAI, Anthropic, Google, Local")
+  System_Ext(AIProviders, "AI Providers", "OpenAI, Anthropic, Perplexity")
   System_Ext(Email, "Email Service", "Resend / SendGrid")
   System_Ext(Payments, "Payment Provider", "Stripe")
   System_Ext(ExternalAPIs, "External APIs", "Google Search Console, etc.")
@@ -392,12 +392,16 @@ sequenceDiagram
 │       │   └── security.ts
 │       └── package.json
 │
-├── workers/                          # Background workers
-│   ├── analysis-worker/
-│   ├── keyword-worker/
-│   ├── content-worker/
-│   ├── report-worker/
-│   └── shared/
+├── apps/workers/                     # Background workers
+│   ├── src/
+│   │   ├── queue.ts
+│   │   ├── handlers/
+│   │   │   ├── analysis.handler.ts
+│   │   │   ├── report.handler.ts
+│   │   │   ├── notification.handler.ts
+│   │   │   └── billing.handler.ts
+│   │   └── index.ts
+│   └── package.json
 │
 ├── scripts/                          # DevOps & utility scripts
 │   ├── seed.ts
