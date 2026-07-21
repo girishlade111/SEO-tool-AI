@@ -355,62 +355,18 @@ sequenceDiagram
 │   │   ├── src/
 │   │   │   ├── auth/
 │   │   │   │   ├── auth.service.ts
-│   │   │   │   ├── permissions.service.ts
-│   │   │   │   └── audit.service.ts
-│   │   │   ├── projects/
-│   │   │   │   ├── project.service.ts
-│   │   │   │   └── project-member.service.ts
-│   │   │   ├── analysis/
-│   │   │   │   ├── analysis.service.ts
-│   │   │   │   ├── page-analyzer.service.ts
-│   │   │   │   ├── crawler.service.ts
-│   │   │   │   ├── seo-scorer.service.ts
-│   │   │   │   └── core-web-vitals.service.ts
-│   │   │   ├── keywords/
-│   │   │   │   ├── keyword.service.ts
-│   │   │   │   ├── keyword-researcher.service.ts
-│   │   │   │   └── keyword-cluster.service.ts
-│   │   │   ├── content/
-│   │   │   │   ├── content.service.ts
-│   │   │   │   ├── content-optimizer.service.ts
-│   │   │   │   ├── content-generator.service.ts
-│   │   │   │   └── content-scorer.service.ts
-│   │   │   ├── ai/
-│   │   │   │   ├── ai.service.ts
-│   │   │   │   ├── providers/
-│   │   │   │   │   ├── ai-provider.interface.ts
-│   │   │   │   │   ├── openai.provider.ts
-│   │   │   │   │   ├── anthropic.provider.ts
-│   │   │   │   │   └── google.provider.ts
-│   │   │   │   ├── prompt-templates/
-│   │   │   │   │   ├── seo-audit.template.ts
-│   │   │   │   │   ├── content-generation.template.ts
-│   │   │   │   │   ├── keyword-research.template.ts
-│   │   │   │   │   └── chat-copilot.template.ts
-│   │   │   │   ├── ai-cost-tracker.service.ts
-│   │   │   │   └── context-builder.service.ts
-│   │   │   ├── reports/
-│   │   │   │   ├── report.service.ts
-│   │   │   │   └── report-generator.service.ts
-│   │   │   ├── billing/
-│   │   │   │   ├── billing.service.ts
-│   │   │   │   ├── subscription.service.ts
-│   │   │   │   ├── usage-meter.service.ts
-│   │   │   │   └── stripe.service.ts
-│   │   │   ├── admin/
-│   │   │   │   ├── admin.service.ts
-│   │   │   │   └── feature-flags.service.ts
-│   │   │   ├── notifications/
-│   │   │   │   ├── notification.service.ts
-│   │   │   │   └── email.service.ts
-│   │   │   ├── jobs/
-│   │   │   │   ├── job-orchestrator.service.ts
-│   │   │   │   ├── analysis.job.ts
-│   │   │   │   ├── keyword-research.job.ts
-│   │   │   │   ├── content-generation.job.ts
-│   │   │   │   └── report-generation.job.ts
-│   │   │   └── cache/
-│   │   │       └── cache.service.ts
+│   │   │   │   └── permissions.service.ts
+│   │   │   ├── project.service.ts
+│   │   │   ├── analysis.service.ts
+│   │   │   ├── seo-scorer.service.ts
+│   │   │   ├── keyword.service.ts
+│   │   │   ├── content.service.ts
+│   │   │   ├── report.service.ts
+│   │   │   ├── notification.service.ts
+│   │   │   ├── billing.service.ts
+│   │   │   ├── admin.service.ts
+│   │   │   ├── cache.service.ts
+│   │   │   └── index.ts
 │   │   └── package.json
 │   │
 │   ├── ai-core/                      # AI infrastructure
