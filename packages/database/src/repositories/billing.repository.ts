@@ -61,6 +61,15 @@ export interface CreatePaymentMethodData {
 }
 
 export class BillingRepository extends BaseRepository {
+  private getPlanDefaults(plan: $Enums.PlanType): { maxProjects: number; maxPagesPerProject: number; maxKeywords: number; aiCredits: number; apiCallsLimit: number } {
+    switch (plan) {
+      case 'pro': return { maxProjects: 10, maxPagesPerProject: 5000, maxKeywords: 1000, aiCredits: 500, apiCallsLimit: 10000 };
+      case 'business': return { maxProjects: 50, maxPagesPerProject: 50000, maxKeywords: 10000, aiCredits: 5000, apiCallsLimit: 100000 };
+      case 'enterprise': return { maxProjects: -1, maxPagesPerProject: -1, maxKeywords: -1, aiCredits: -1, apiCallsLimit: -1 };
+      default: return { maxProjects: 1, maxPagesPerProject: 100, maxKeywords: 50, aiCredits: 10, apiCallsLimit: 100 };
+    }
+  }
+
   findSubscriptionByUserId(userId: string) {
     return this.prisma.subscription.findUnique({
       where: { userId },
@@ -184,7 +193,7 @@ export class BillingRepository extends BaseRepository {
     const records = await this.prisma.usageRecord.findMany({
       where: {
         userId,
-        type: type as Prisma.EnumUsageTypeFilter['equals'],
+        type: type as $Enums.UsageType,
         createdAt: { gte: dateFrom, lte: dateTo },
       },
     });
