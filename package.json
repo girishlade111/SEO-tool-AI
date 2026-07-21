@@ -12,11 +12,12 @@
     "test:e2e": "turbo test:e2e",
     "clean": "turbo clean",
     "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
-    "db:generate": "cd packages/database && npx prisma generate",
-    "db:push": "cd packages/database && npx prisma db push",
-    "db:migrate": "cd packages/database && npx prisma migrate dev",
+    "db:generate": "cd packages/database && npx prisma generate --schema=prisma/schema/index.prisma",
+    "db:push": "cd packages/database && npx prisma db push --schema=prisma/schema/index.prisma",
+    "db:migrate": "cd packages/database && npx prisma migrate dev --schema=prisma/schema/index.prisma",
     "db:seed": "cd packages/database && npx tsx prisma/seed.ts",
-    "db:studio": "cd packages/database && npx prisma studio"
+    "db:studio": "cd packages/database && npx prisma studio --schema=prisma/schema/index.prisma",
+    "db:migrate:prod": "cd packages/database && npx prisma migrate deploy --schema=prisma/schema/index.prisma"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
