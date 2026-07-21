@@ -1,6 +1,6 @@
 import { AnalysisRepository } from '@lade/database';
 import { NotFoundError } from '@lade/shared';
-import type { Analysis, PaginationParams, AnalysisType, AnalysisSummary } from '@lade/shared';
+import type { Analysis, PaginationParams, AnalysisType } from '@lade/shared';
 import { logger } from '@lade/config';
 import { SeoScorerService } from './seo-scorer.service';
 
@@ -18,7 +18,7 @@ export class AnalysisService {
       trigger: 'manual',
       pagesAnalyzed: 0,
       issuesFound: 0,
-      overallScore: null,
+      overallScore: undefined,
     });
 
     logger.info('Analysis triggered', { analysisId: analysis.id, projectId, type, triggeredBy });

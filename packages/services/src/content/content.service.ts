@@ -13,7 +13,7 @@ export class ContentService {
   async getById(id: string): Promise<Content> {
     const content = await this.contentRepo.findById(id);
     if (!content || content.deletedAt) throw new NotFoundError('Content', id);
-    return content;
+    return content as unknown as Content;
   }
 
   async create(
@@ -50,7 +50,7 @@ export class ContentService {
     userId: string,
     data: Record<string, unknown>
   ): Promise<Content> {
-    const content = await this.getById(id);
+    await this.getById(id);
     return this.contentRepo.update(id, { ...data, updatedBy: userId }) as unknown as Content;
   }
 
@@ -60,12 +60,9 @@ export class ContentService {
   }
 
   async publish(id: string, userId: string): Promise<Content> {
-    await this.getById(id);
-    // Save current version before publishing
     const content = await this.getById(id);
     await this.contentRepo.createVersion({
       contentId: id,
-      version: 1,
       content: content.content ?? '',
       metaTitle: content.metaTitle,
       metaDescription: content.metaDescription,
