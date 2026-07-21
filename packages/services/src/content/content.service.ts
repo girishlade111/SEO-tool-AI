@@ -43,12 +43,15 @@ export class ContentService {
       createdBy: userId,
       updatedBy: userId,
     }) as unknown as Content;
+  }
+
+  async update(
     id: string,
     userId: string,
     data: Record<string, unknown>
   ): Promise<Content> {
     const content = await this.getById(id);
-    return this.contentRepo.update(id, { ...data, updatedBy: userId });
+    return this.contentRepo.update(id, { ...data, updatedBy: userId }) as unknown as Content;
   }
 
   async delete(id: string): Promise<void> {
@@ -63,13 +66,13 @@ export class ContentService {
     await this.contentRepo.createVersion({
       contentId: id,
       version: 1,
-      content: content.content,
+      content: content.content ?? '',
       metaTitle: content.metaTitle,
       metaDescription: content.metaDescription,
       changeNote: 'Published',
       createdBy: userId,
     });
-    return this.contentRepo.publish(id);
+    return this.contentRepo.publish(id) as unknown as Content;
   }
 
   async getVersions(contentId: string) {
