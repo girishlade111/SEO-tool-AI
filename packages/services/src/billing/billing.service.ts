@@ -1,20 +1,21 @@
 import { BillingRepository } from '@lade/database';
 import { NotFoundError } from '@lade/shared';
-import type { Subscription, PlanType, Invoice, PaginationParams } from '@lade/shared';
-import { PLANS, logger } from '@lade/shared';
+import type { Subscription, PlanType, PaginationParams } from '@lade/shared';
+import { PLANS } from '@lade/shared';
 
 export class BillingService {
   constructor(private readonly billingRepo: BillingRepository) {}
 
   async getSubscription(userId: string): Promise<Subscription | null> {
-    return this.billingRepo.findSubscriptionByUserId(userId);
+    const result = await this.billingRepo.findSubscriptionByUserId(userId);
+    return result as unknown as Subscription | null;
   }
 
   async changePlan(userId: string, plan: PlanType): Promise<Subscription> {
     const current = await this.billingRepo.findSubscriptionByUserId(userId);
 
     if (current) {
-      return this.billingRepo.updateSubscription(current.id, {
+      const result = await this.billingRepo.updateSubscription(current.id, {
         plan,
         maxProjects: PLANS[plan].maxProjects,
         maxPagesPerProject: PLANS[plan].maxPagesPerProject,
@@ -22,13 +23,14 @@ export class BillingService {
         aiCredits: PLANS[plan].aiCredits,
         apiCallsLimit: PLANS[plan].apiCallsLimit,
       });
+      return result as unknown as Subscription;
     }
 
     const now = new Date();
     const periodEnd = new Date(now);
     periodEnd.setMonth(periodEnd.getMonth() + 1);
 
-    return this.billingRepo.createSubscription({
+    const result = await this.billingRepo.createSubscription({
       userId,
       plan,
       status: 'active',
@@ -40,12 +42,14 @@ export class BillingService {
       aiCredits: PLANS[plan].aiCredits,
       apiCallsLimit: PLANS[plan].apiCallsLimit,
     });
+    return result as unknown as Subscription;
   }
 
   async cancelSubscription(userId: string): Promise<Subscription> {
     const sub = await this.billingRepo.findSubscriptionByUserId(userId);
     if (!sub) throw new NotFoundError('Subscription');
-    return this.billingRepo.cancelSubscription(sub.id);
+    const result = await this.billingRepo.cancelSubscription(sub.id);
+    return result as unknown as Subscription;
   }
 
   async getInvoices(userId: string, params: PaginationParams) {

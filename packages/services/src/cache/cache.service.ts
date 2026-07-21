@@ -1,5 +1,3 @@
-import type { SerializedError } from '@lade/config';
-
 type CacheValue = string | number | boolean | Record<string, unknown> | unknown[] | null;
 
 interface CacheEntry {

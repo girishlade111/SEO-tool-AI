@@ -1,7 +1,6 @@
 import { ContentRepository } from '@lade/database';
-import { NotFoundError, ConflictError } from '@lade/shared';
+import { NotFoundError } from '@lade/shared';
 import type { Content, PaginationParams, ContentType, ContentStatus } from '@lade/shared';
-import { logger } from '@lade/config';
 import { slugify } from '@lade/shared';
 
 export class ContentService {
@@ -43,10 +42,7 @@ export class ContentService {
       targetKeyword: data.targetKeyword ?? null,
       createdBy: userId,
       updatedBy: userId,
-    });
-  }
-
-  async update(
+    }) as unknown as Content;
     id: string,
     userId: string,
     data: Record<string, unknown>

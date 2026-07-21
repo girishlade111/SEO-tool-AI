@@ -210,22 +210,17 @@ export class BillingRepository extends BaseRepository {
     };
   }
 
-  async getTotalUsage(userId: string, dateFrom: Date, dateTo: Date) {
-    const records = await this.prisma.usageRecord.groupBy({
-      by: ['type'],
+  async getTotalUsage(userId: string, type: string, dateFrom: Date, dateTo: Date) {
+    const result = await this.prisma.usageRecord.aggregate({
       where: {
         userId,
+        type: type as $Enums.UsageType,
         createdAt: { gte: dateFrom, lte: dateTo },
       },
       _sum: { quantity: true },
-      _count: true,
     });
 
-    return records.map(r => ({
-      type: r.type,
-      totalQuantity: r._sum.quantity ?? 0,
-      totalRecords: r._count,
-    }));
+    return result._sum.quantity ?? 0;
   }
 
   createPaymentMethod(data: CreatePaymentMethodData) {
