@@ -1,0 +1,127 @@
+
+> @lade/services@1.0.0 typecheck C:\Users\Girish Lade\OneDrive\Desktop\SEO-tool-AI\packages\services
+> tsc --noEmit
+
+src/analysis/analysis.service.ts(17,7): error TS2353: Object literal may only specify known properties, and 'status' does not exist in type 'CreateAnalysisData'.
+src/analysis/analysis.service.ts(25,5): error TS2322: Type '{ id: string; status: AnalysisStatus; createdAt: Date; updatedAt: Date; projectId: string; type: AnalysisType; completedAt: Date | null; ... 4 more ...; summary: JsonValue; }' is not assignable to type 'Analysis'.
+  Types of property 'summary' are incompatible.
+    Type 'JsonValue' is not assignable to type 'AnalysisSummary | null'.
+      Type 'string' is not assignable to type 'AnalysisSummary'.
+src/analysis/analysis.service.ts(31,5): error TS2322: Type '{ pageAnalyses: ({ page: { id: string; title: string | null; url: string; }; issues: { id: string; createdAt: Date; type: IssueType; message: string; pageAnalysisId: string; category: IssueCategory; code: string; selector: string | null; recommendation: string; impact: number; }[]; } & { ...; })[]; } & { ...; }' is not assignable to type 'Analysis'.
+  Types of property 'summary' are incompatible.
+    Type 'JsonValue' is not assignable to type 'AnalysisSummary | null'.
+      Type 'string' is not assignable to type 'AnalysisSummary'.
+src/analysis/analysis.service.ts(39,5): error TS2322: Type '({ pageAnalyses: ({ issues: { id: string; createdAt: Date; type: IssueType; message: string; pageAnalysisId: string; category: IssueCategory; code: string; selector: string | null; recommendation: string; impact: number; }[]; } & { ...; })[]; } & { ...; }) | null' is not assignable to type 'Analysis | null'.
+  Type '{ pageAnalyses: ({ issues: { id: string; createdAt: Date; type: IssueType; message: string; pageAnalysisId: string; category: IssueCategory; code: string; selector: string | null; recommendation: string; impact: number; }[]; } & { ...; })[]; } & { ...; }' is not assignable to type 'Analysis | null'.
+    Type '{ pageAnalyses: ({ issues: { id: string; createdAt: Date; type: IssueType; message: string; pageAnalysisId: string; category: IssueCategory; code: string; selector: string | null; recommendation: string; impact: number; }[]; } & { ...; })[]; } & { ...; }' is not assignable to type 'Analysis'.
+      Types of property 'summary' are incompatible.
+        Type 'JsonValue' is not assignable to type 'AnalysisSummary | null'.
+          Type 'string' is not assignable to type 'AnalysisSummary'.
+src/auth/auth.service.ts(22,5): error TS2322: Type '{ name: string; id: string; email: string; passwordHash: string; avatarUrl: string | null; role: UserRole; status: UserStatus; emailVerifiedAt: Date | null; createdAt: Date; updatedAt: Date; deletedAt: Date | null; }' is not assignable to type 'User'.
+  Types of property 'emailVerifiedAt' are incompatible.
+    Type 'Date | null' is not assignable to type 'string | null'.
+      Type 'Date' is not assignable to type 'string'.
+src/auth/auth.service.ts(40,5): error TS2322: Type '{ name: string; id: string; email: string; passwordHash: string; avatarUrl: string | null; role: UserRole; status: UserStatus; emailVerifiedAt: Date | null; createdAt: Date; updatedAt: Date; deletedAt: Date | null; }' is not assignable to type 'User'.
+  Types of property 'emailVerifiedAt' are incompatible.
+    Type 'Date | null' is not assignable to type 'string | null'.
+      Type 'Date' is not assignable to type 'string'.
+src/auth/auth.service.ts(48,5): error TS2322: Type '{ _count: { conversations: number; projects: number; notifications: number; }; subscriptions: { id: string; status: SubscriptionStatus; createdAt: Date; updatedAt: Date; ... 11 more ...; canceledAt: Date | null; }[]; } & { ...; }' is not assignable to type 'User'.
+  Types of property 'emailVerifiedAt' are incompatible.
+    Type 'Date | null' is not assignable to type 'string | null'.
+      Type 'Date' is not assignable to type 'string'.
+src/auth/auth.service.ts(52,5): error TS2322: Type '{ name: string; id: string; email: string; passwordHash: string; avatarUrl: string | null; role: UserRole; status: UserStatus; emailVerifiedAt: Date | null; createdAt: Date; updatedAt: Date; deletedAt: Date | null; }' is not assignable to type 'User'.
+  Types of property 'emailVerifiedAt' are incompatible.
+    Type 'Date | null' is not assignable to type 'string | null'.
+      Type 'Date' is not assignable to type 'string'.
+src/auth/auth.service.ts(52,37): error TS2345: Argument of type '{ name?: string | undefined; avatarUrl?: string | null | undefined; }' is not assignable to parameter of type 'UpdateUserData'.
+  Types of property 'avatarUrl' are incompatible.
+    Type 'string | null | undefined' is not assignable to type 'string | undefined'.
+      Type 'null' is not assignable to type 'string | undefined'.
+src/billing/billing.service.ts(3,39): error TS6196: 'Invoice' is declared but never used.
+src/billing/billing.service.ts(4,17): error TS2305: Module '"@lade/shared"' has no exported member 'logger'.
+src/billing/billing.service.ts(4,17): error TS6133: 'logger' is declared but its value is never read.
+src/billing/billing.service.ts(10,5): error TS2322: Type '({ invoices: { id: string; status: InvoiceStatus; createdAt: Date; userId: string; subscriptionId: string; stripeInvoiceId: string | null; amount: number; amountPaid: number; ... 4 more ...; paidAt: Date | null; }[]; } & { ...; }) | null' is not assignable to type 'Subscription | null'.
+  Type '{ invoices: { id: string; status: InvoiceStatus; createdAt: Date; userId: string; subscriptionId: string; stripeInvoiceId: string | null; amount: number; amountPaid: number; ... 4 more ...; paidAt: Date | null; }[]; } & { ...; }' is not assignable to type 'Subscription | null'.
+    Type '{ invoices: { id: string; status: InvoiceStatus; createdAt: Date; userId: string; subscriptionId: string; stripeInvoiceId: string | null; amount: number; amountPaid: number; ... 4 more ...; paidAt: Date | null; }[]; } & { ...; }' is not assignable to type 'Subscription'.
+      Types of property 'currentPeriodStart' are incompatible.
+        Type 'Date' is not assignable to type 'string'.
+src/billing/billing.service.ts(17,7): error TS2322: Type '{ id: string; status: SubscriptionStatus; createdAt: Date; updatedAt: Date; userId: string; plan: PlanType; stripeSubscriptionId: string | null; ... 8 more ...; canceledAt: Date | null; }' is not assignable to type 'Subscription'.
+  Types of property 'currentPeriodStart' are incompatible.
+    Type 'Date' is not assignable to type 'string'.
+src/billing/billing.service.ts(31,5): error TS2322: Type '{ id: string; status: SubscriptionStatus; createdAt: Date; updatedAt: Date; userId: string; plan: PlanType; stripeSubscriptionId: string | null; ... 8 more ...; canceledAt: Date | null; }' is not assignable to type 'Subscription'.
+  Types of property 'currentPeriodStart' are incompatible.
+    Type 'Date' is not assignable to type 'string'.
+src/billing/billing.service.ts(35,7): error TS2353: Object literal may only specify known properties, and 'currentPeriodStart' does not exist in type 'CreateSubscriptionData'.
+src/billing/billing.service.ts(48,5): error TS2322: Type '{ id: string; status: SubscriptionStatus; createdAt: Date; updatedAt: Date; userId: string; plan: PlanType; stripeSubscriptionId: string | null; ... 8 more ...; canceledAt: Date | null; }' is not assignable to type 'Subscription'.
+  Types of property 'currentPeriodStart' are incompatible.
+    Type 'Date' is not assignable to type 'string'.
+src/billing/billing.service.ts(67,91): error TS2554: Expected 3 arguments, but got 4.
+src/billing/billing.service.ts(69,34): error TS2363: The right-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.
+src/billing/billing.service.ts(70,7): error TS2322: Type '{ type: UsageType; totalQuantity: number; totalRecords: number; }[]' is not assignable to type 'number'.
+src/cache/cache.service.ts(1,1): error TS6133: 'SerializedError' is declared but its value is never read.
+src/cache/cache.service.ts(1,15): error TS2724: '"@lade/config"' has no exported member named 'SerializedError'. Did you mean 'serializeError'?
+src/content/content.service.ts(2,25): error TS6133: 'ConflictError' is declared but its value is never read.
+src/content/content.service.ts(4,1): error TS6133: 'logger' is declared but its value is never read.
+src/content/content.service.ts(17,5): error TS2322: Type '{ _count: { versions: number; }; createdByUser: { name: string; id: string; email: string; }; updatedByUser: { name: string; id: string; email: string; }; } & { id: string; status: ContentStatus; ... 15 more ...; publishedAt: Date | null; }' is not assignable to type 'Content'.
+  Types of property 'content' are incompatible.
+    Type 'string | null' is not assignable to type 'string'.
+      Type 'null' is not assignable to type 'string'.
+src/content/content.service.ts(34,5): error TS2322: Type '{ id: string; status: ContentStatus; createdAt: Date; updatedAt: Date; deletedAt: Date | null; projectId: string; type: ContentType; title: string; ... 9 more ...; publishedAt: Date | null; }' is not assignable to type 'Content'.
+  Types of property 'content' are incompatible.
+    Type 'string | null' is not assignable to type 'string'.
+      Type 'null' is not assignable to type 'string'.
+src/content/content.service.ts(43,7): error TS2322: Type 'string | null' is not assignable to type 'string | undefined'.
+  Type 'null' is not assignable to type 'string | undefined'.
+src/content/content.service.ts(54,11): error TS6133: 'content' is declared but its value is never read.
+src/content/content.service.ts(55,5): error TS2322: Type '{ id: string; status: ContentStatus; createdAt: Date; updatedAt: Date; deletedAt: Date | null; projectId: string; type: ContentType; title: string; ... 9 more ...; publishedAt: Date | null; }' is not assignable to type 'Content'.
+  Types of property 'content' are incompatible.
+    Type 'string | null' is not assignable to type 'string'.
+      Type 'null' is not assignable to type 'string'.
+src/content/content.service.ts(69,7): error TS2353: Object literal may only specify known properties, and 'version' does not exist in type 'CreateVersionData'.
+src/content/content.service.ts(76,5): error TS2322: Type '{ id: string; status: ContentStatus; createdAt: Date; updatedAt: Date; deletedAt: Date | null; projectId: string; type: ContentType; title: string; ... 9 more ...; publishedAt: Date | null; }' is not assignable to type 'Content'.
+  Types of property 'content' are incompatible.
+    Type 'string | null' is not assignable to type 'string'.
+      Type 'null' is not assignable to type 'string'.
+src/keywords/keyword.service.ts(16,5): error TS2322: Type '{ _count: { rankings: number; }; rankings: { id: string; createdAt: Date; url: string; keywordId: string; position: number; searchEngine: SearchEngine; location: string; trackedAt: Date; }[]; } & { ...; }' is not assignable to type 'Keyword'.
+  Types of property 'serpFeatures' are incompatible.
+    Type 'JsonValue' is not assignable to type 'string[]'.
+      Type 'null' is not assignable to type 'string[]'.
+src/keywords/keyword.service.ts(32,63): error TS2339: Property 'length' does not exist on type 'BatchPayload'.
+src/notifications/notification.service.ts(3,1): error TS6133: 'logger' is declared but its value is never read.
+src/notifications/notification.service.ts(23,5): error TS2322: Type '{ id: string; createdAt: Date; userId: string; type: NotificationType; title: string; message: string; data: JsonValue; read: boolean; readAt: Date | null; }' is not assignable to type 'Notification'.
+  Types of property 'data' are incompatible.
+    Type 'JsonValue' is not assignable to type 'Record<string, unknown> | null'.
+      Type 'string' is not assignable to type 'Record<string, unknown>'.
+src/projects/project.service.ts(22,23): error TS2345: Argument of type '{ user: { name: string; id: string; email: string; avatarUrl: string | null; }; members: ({ user: { name: string; id: string; email: string; avatarUrl: string | null; }; } & { id: string; role: ProjectMemberRole; createdAt: Date; updatedAt: Date; userId: string; projectId: string; })[]; _count: { ...; }; } & { ...; }' is not assignable to parameter of type 'Project'.
+  Types of property 'settings' are incompatible.
+    Type 'JsonValue' is not assignable to type 'ProjectSettings'.
+      Type 'null' is not assignable to type 'ProjectSettings'.
+src/projects/project.service.ts(23,5): error TS2322: Type '{ user: { name: string; id: string; email: string; avatarUrl: string | null; }; members: ({ user: { name: string; id: string; email: string; avatarUrl: string | null; }; } & { id: string; role: ProjectMemberRole; createdAt: Date; updatedAt: Date; userId: string; projectId: string; })[]; _count: { ...; }; } & { ...; }' is not assignable to type 'Project'.
+  Types of property 'settings' are incompatible.
+    Type 'JsonValue' is not assignable to type 'ProjectSettings'.
+      Type 'null' is not assignable to type 'ProjectSettings'.
+src/projects/project.service.ts(38,7): error TS2322: Type 'string | null' is not assignable to type 'string | undefined'.
+  Type 'null' is not assignable to type 'string | undefined'.
+src/projects/project.service.ts(39,7): error TS2322: Type 'Partial<ProjectSettings> | null' is not assignable to type 'Record<string, unknown> | undefined'.
+  Type 'null' is not assignable to type 'Record<string, unknown> | undefined'.
+src/projects/project.service.ts(45,5): error TS2322: Type '{ name: string; id: string; status: ProjectStatus; createdAt: Date; updatedAt: Date; deletedAt: Date | null; domain: string; description: string | null; settings: JsonValue; userId: string; lastAnalyzedAt: Date | null; }' is not assignable to type 'Project'.
+  Types of property 'settings' are incompatible.
+    Type 'JsonValue' is not assignable to type 'ProjectSettings'.
+      Type 'null' is not assignable to type 'ProjectSettings'.
+src/projects/project.service.ts(54,5): error TS2322: Type '{ name: string; id: string; status: ProjectStatus; createdAt: Date; updatedAt: Date; deletedAt: Date | null; domain: string; description: string | null; settings: JsonValue; userId: string; lastAnalyzedAt: Date | null; }' is not assignable to type 'Project'.
+  Types of property 'settings' are incompatible.
+    Type 'JsonValue' is not assignable to type 'ProjectSettings'.
+      Type 'null' is not assignable to type 'ProjectSettings'.
+src/projects/project.service.ts(73,5): error TS2322: Type '{ name: string; id: string; status: ProjectStatus; createdAt: Date; updatedAt: Date; deletedAt: Date | null; domain: string; description: string | null; settings: JsonValue; userId: string; lastAnalyzedAt: Date | null; }' is not assignable to type 'Project'.
+  Types of property 'settings' are incompatible.
+    Type 'JsonValue' is not assignable to type 'ProjectSettings'.
+      Type 'null' is not assignable to type 'ProjectSettings'.
+src/projects/project.service.ts(76,29): error TS6133: 'userId' is declared but its value is never read.
+src/projects/project.service.ts(76,45): error TS6133: 'userRole' is declared but its value is never read.
+src/projects/project.service.ts(77,5): error TS2322: Type '{ name: string; id: string; status: ProjectStatus; createdAt: Date; updatedAt: Date; deletedAt: Date | null; domain: string; description: string | null; settings: JsonValue; userId: string; lastAnalyzedAt: Date | null; }' is not assignable to type 'Project'.
+  Types of property 'settings' are incompatible.
+    Type 'JsonValue' is not assignable to type 'ProjectSettings'.
+      Type 'null' is not assignable to type 'ProjectSettings'.
+src/reports/report.service.ts(1,10): error TS2724: '"@lade/database"' has no exported member named 'ReportRepository'. Did you mean 'UserRepository'?
+src/reports/report.service.ts(4,1): error TS6133: 'logger' is declared but its value is never read.
+ ELIFECYCLE  Command failed with exit code 2.
