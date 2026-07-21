@@ -1,12 +1,12 @@
-import type { AIRequest, AIResponse, AIMessage, StreamChunk } from '../types';
+import type { AIRequest, AIResponse, AIMessage, StreamChunk, AIProvider, AIModel } from '../types';
 import type { AIProviderInterface } from './provider.interface';
 import { getModelConfig } from '../models';
 import { costTracker } from '../cost-tracker';
 import { logger } from '@lade/config';
 
 export class OpenAIProvider implements AIProviderInterface {
-  readonly name = 'openai';
-  readonly supportedModels = ['gpt-4o', 'gpt-4o-mini'];
+  readonly name: AIProvider = 'openai';
+  readonly supportedModels: AIModel[] = ['gpt-4o', 'gpt-4o-mini'];
   private apiKey = '';
   private baseUrl = 'https://api.openai.com/v1';
   private timeoutMs = 30000;
@@ -39,7 +39,7 @@ export class OpenAIProvider implements AIProviderInterface {
     return {
       content: data.choices?.[0]?.message?.content ?? '',
       model: request.model,
-      provider: this.name as AIProviderInterface['name'],
+      provider: this.name,
       usage,
       latencyMs,
       finishReason: data.choices?.[0]?.finish_reason ?? 'stop',
