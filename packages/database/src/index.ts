@@ -8,6 +8,7 @@ export { ContentRepository } from './repositories/content.repository';
 export { AiRepository } from './repositories/ai.repository';
 export { BillingRepository } from './repositories/billing.repository';
 export { NotificationRepository } from './repositories/notification.repository';
+export { ReportRepository } from './repositories/report.repository';
 export { AdminRepository } from './repositories/admin.repository';
 
 export type {
@@ -65,6 +66,10 @@ export type {
   CreateNotificationData,
   NotificationQueryParams,
 } from './repositories/notification.repository';
+
+export type {
+  CreateReportData,
+} from './repositories/report.repository';
 
 export type {
   AdminListUsersParams,
