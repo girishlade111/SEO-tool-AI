@@ -1,7 +1,7 @@
 import { jobQueue } from './queue';
 import { handlePageAnalysis } from './handlers/analysis.handler';
 import { handleReportGeneration } from './handlers/report.handler';
-import { handleNotificationSend, handleBulkNotificationSend } from './handlers/notification.handler';
+import { handleNotificationSend } from './handlers/notification.handler';
 import { handleBillingUsage, handleBillingInvoice } from './handlers/billing.handler';
 import { logger } from '@lade/config';
 

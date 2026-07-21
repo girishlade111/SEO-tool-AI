@@ -1,15 +1,15 @@
 import { logger } from '@lade/config';
-import type { Job, JobType, JobStatus } from './types';
+import type { Job, JobType } from './types';
 
-const memoryQueue: Map<string, Job> = new Map();
+const memoryQueue: Map<string, Job<any>> = new Map();
 const runningJobs = new Set<string>();
 
 export class JobQueue {
-  private handlers: Map<JobType, { concurrency: number; handle: (job: Job) => Promise<void> }> = new Map();
+  private handlers: Map<JobType, { concurrency: number; handle: (job: Job<any>) => Promise<void> }> = new Map();
   private polling = false;
   private startedAt = Date.now();
 
-  register(type: JobType, concurrency: number, handle: (job: Job) => Promise<void>): void {
+  register(type: JobType, concurrency: number, handle: (job: Job<any>) => Promise<void>): void {
     this.handlers.set(type, { concurrency, handle });
     logger.info('Handler registered', { type, concurrency });
   }
@@ -63,7 +63,7 @@ export class JobQueue {
     setTimeout(() => this.poll(), 1000);
   }
 
-  private async processJob(job: Job, handler: (job: Job) => Promise<void>): Promise<void> {
+  private async processJob(job: Job<any>, handler: (job: Job<any>) => Promise<void>): Promise<void> {
     job.status = 'running';
     job.startedAt = new Date();
     job.attempts++;
