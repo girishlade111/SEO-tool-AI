@@ -7,11 +7,13 @@ export interface CreateContentData {
   type?: 'blog' | 'landing' | 'product' | 'schema' | 'social' | 'meta';
   title: string;
   slug: string;
+  status?: string;
   content?: string;
   metaTitle?: string;
   metaDescription?: string;
   targetKeyword?: string;
   createdBy: string;
+  updatedBy?: string;
 }
 
 export interface UpdateContentData {

@@ -69,6 +69,7 @@ export class ReportRepository extends BaseRepository {
       where: { id },
       data: {
         ...data,
+        status: data.status as $Enums.ReportStatus | undefined,
         config: data.config as Prisma.InputJsonValue | undefined,
       },
     });
