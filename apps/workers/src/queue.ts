@@ -77,7 +77,7 @@ export class JobQueue {
     } catch (error) {
       job.status = 'failed';
       job.error = String(error);
-      logger.error('Job failed', { id: job.id, type: job.type, error: job.error });
+      logger.error('Job failed', undefined, { id: job.id, type: job.type, error: job.error });
 
       if (job.attempts < job.maxAttempts) {
         job.status = 'queued';
