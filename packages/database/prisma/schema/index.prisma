@@ -1,0 +1,724 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  user
+  admin
+}
+
+enum UserStatus {
+  active
+  suspended
+  inactive
+}
+
+enum ProjectStatus {
+  active
+  archived
+  deleted
+}
+
+enum ProjectMemberRole {
+  owner
+  editor
+  viewer
+}
+
+enum AnalysisType {
+  full
+  quick
+  scheduled
+}
+
+enum AnalysisStatus {
+  queued
+  running
+  completed
+  failed
+}
+
+enum AnalysisTrigger {
+  manual
+  scheduled
+  webhook
+}
+
+enum IssueType {
+  error
+  warning
+  info
+}
+
+enum IssueCategory {
+  meta
+  heading
+  image
+  link
+  perf
+  schema
+  a11y
+  content
+  technical
+}
+
+enum SearchIntent {
+  informational
+  navigational
+  commercial
+  transactional
+}
+
+enum SearchEngine {
+  google
+  bing
+  chatgpt
+  perplexity
+}
+
+enum ContentType {
+  blog
+  landing
+  product
+  schema
+  social
+  meta
+}
+
+enum ContentStatus {
+  draft
+  published
+  archived
+}
+
+enum AiGenerationType {
+  blog
+  meta
+  schema
+  landing
+  faq
+  social
+}
+
+enum AiGenerationStatus {
+  pending
+  processing
+  completed
+  failed
+}
+
+enum AiMessageRole {
+  user
+  assistant
+  system
+}
+
+enum ReportType {
+  pdf
+  csv
+  xlsx
+  html
+}
+
+enum ReportStatus {
+  generating
+  completed
+  failed
+}
+
+enum ReportSchedule {
+  none
+  daily
+  weekly
+  monthly
+}
+
+enum PlanType {
+  free
+  pro
+  business
+  enterprise
+}
+
+enum SubscriptionStatus {
+  active
+  past_due
+  canceled
+  expired
+  trialing
+}
+
+enum UsageType {
+  ai_credit
+  api_call
+  page_analysis
+  report
+}
+
+enum InvoiceStatus {
+  draft
+  open
+  paid
+  uncollectible
+  void
+}
+
+enum NotificationType {
+  alert
+  report
+  billing
+  system
+}
+
+model User {
+  id              String    @id @default(cuid())
+  email           String    @unique
+  passwordHash    String
+  name            String
+  avatarUrl       String?
+  role            UserRole  @default(user)
+  status          UserStatus @default(active)
+  emailVerifiedAt DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  deletedAt       DateTime?
+
+  projects        Project[]
+  memberships     ProjectMember[]
+  apiKeys         ApiKey[]
+  notifications   Notification[]
+  subscriptions   Subscription[]
+  conversations   AiConversation[]
+  generations     AiContentGeneration[]
+  auditLogs       AuditLog[]
+  sessions        Session[]
+  accounts        Account[]
+  invoices        Invoice[]
+  paymentMethods  PaymentMethod[]
+  usageRecords    UsageRecord[]
+  contentsCreated Content[]       @relation("ContentCreatedBy")
+  contentsUpdated Content[]       @relation("ContentUpdatedBy")
+  contentVersions ContentVersion[] @relation("ContentVersionCreatedBy")
+
+  @@index([email])
+  @@index([status])
+  @@index([role])
+  @@index([deletedAt])
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id        String    @id @default(cuid())
+  userId    String
+  token     String
+  ipAddress String
+  userAgent String
+  expiresAt DateTime
+  createdAt DateTime  @default(now())
+  revokedAt DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([token])
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Project {
+  id             String        @id @default(cuid())
+  name           String
+  domain         String
+  description    String?
+  settings       Json          @default("{\"crawlDepth\":3,\"maxPages\":500,\"checkInterval\":\"weekly\",\"excludedPaths\":[],\"includePaths\":[],\"respectRobotsTxt\":true,\"followRedirects\":true,\"userAgent\":\"LadeStack-SEO-Bot/1.0\",\"throttleDelay\":1000}")
+  status         ProjectStatus @default(active)
+  userId         String
+  lastAnalyzedAt DateTime?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  deletedAt      DateTime?
+
+  user                 User                 @relation(fields: [userId], references: [id])
+  members              ProjectMember[]
+  pages                Page[]
+  analyses             Analysis[]
+  keywords             Keyword[]
+  keywordClusters      KeywordCluster[]
+  contents             Content[]
+  competitors          Competitor[]
+  reports              Report[]
+  generations          AiContentGeneration[]
+  conversations        AiConversation[]
+  auditLogs            AuditLog[]
+
+  @@index([userId, deletedAt])
+  @@index([domain, deletedAt])
+  @@index([status])
+}
+
+model ProjectMember {
+  id        String            @id @default(cuid())
+  projectId String
+  userId    String
+  role      ProjectMemberRole @default(viewer)
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, userId])
+  @@index([userId])
+}
+
+model Page {
+  id            String    @id @default(cuid())
+  projectId     String
+  url           String
+  title         String?
+  statusCode    Int?
+  contentType   String?
+  wordCount     Int?
+  checksum      String?
+  lastCrawledAt DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
+
+  project   Project        @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  analyses  PageAnalysis[]
+
+  @@unique([projectId, url])
+  @@index([projectId, deletedAt])
+}
+
+model Analysis {
+  id            String         @id @default(cuid())
+  projectId     String
+  type          AnalysisType   @default(full)
+  status        AnalysisStatus @default(queued)
+  trigger       AnalysisTrigger @default(manual)
+  pagesAnalyzed Int            @default(0)
+  issuesFound   Int            @default(0)
+  overallScore  Float?
+  summary       Json?
+  completedAt   DateTime?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  project      Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  pageAnalyses PageAnalysis[]
+
+  @@index([projectId, createdAt])
+  @@index([status])
+}
+
+model PageAnalysis {
+  id         String   @id @default(cuid())
+  pageId     String
+  analysisId String
+  score      Float    @default(0)
+  meta       Json     @default("{}")
+  headings   Json     @default("{}")
+  images     Json     @default("{}")
+  links      Json     @default("{}")
+  performance Json    @default("{}")
+  structuredData Json @default("{}")
+  accessibility Json  @default("{}")
+  content    Json     @default("{}")
+  createdAt  DateTime @default(now())
+
+  page    Page         @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  analysis Analysis    @relation(fields: [analysisId], references: [id], onDelete: Cascade)
+  issues  PageIssue[]
+
+  @@unique([pageId, analysisId])
+  @@index([analysisId])
+}
+
+model PageIssue {
+  id              String       @id @default(cuid())
+  pageAnalysisId  String
+  type            IssueType    @default(warning)
+  category        IssueCategory
+  code            String
+  message         String
+  selector        String?
+  recommendation  String
+  impact          Int          @default(5)
+  createdAt       DateTime     @default(now())
+
+  pageAnalysis PageAnalysis @relation(fields: [pageAnalysisId], references: [id], onDelete: Cascade)
+
+  @@index([pageAnalysisId])
+  @@index([type])
+  @@index([category])
+}
+
+model Keyword {
+  id           String       @id @default(cuid())
+  projectId    String
+  keyword      String
+  intent       SearchIntent @default(informational)
+  searchVolume Float        @default(0)
+  difficulty   Float        @default(0)
+  cpc          Float        @default(0)
+  competition  Float        @default(0)
+  serpFeatures Json         @default("[]")
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  deletedAt    DateTime?
+
+  project   Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  rankings  KeywordRanking[]
+
+  @@unique([projectId, keyword])
+  @@index([projectId, deletedAt])
+  @@index([searchVolume])
+  @@index([difficulty])
+}
+
+model KeywordCluster {
+  id           String   @id @default(cuid())
+  projectId    String
+  name         String
+  keywords     Json     @default("[]")
+  topic        String
+  totalVolume  Float    @default(0)
+  avgDifficulty Float   @default(0)
+  createdAt    DateTime @default(now())
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+}
+
+model KeywordRanking {
+  id          String       @id @default(cuid())
+  keywordId   String
+  position    Int
+  url         String
+  searchEngine SearchEngine @default(google)
+  location    String       @default("US")
+  trackedAt   DateTime     @default(now())
+  createdAt   DateTime     @default(now())
+
+  keyword Keyword @relation(fields: [keywordId], references: [id], onDelete: Cascade)
+
+  @@index([keywordId, trackedAt])
+  @@index([searchEngine])
+}
+
+model Content {
+  id              String        @id @default(cuid())
+  projectId       String
+  type            ContentType   @default(blog)
+  title           String
+  slug            String
+  status          ContentStatus @default(draft)
+  content         String?
+  metaTitle       String?
+  metaDescription String?
+  targetKeyword   String?
+  seoScore        Json?
+  overallScore    Float?
+  createdBy       String
+  updatedBy       String
+  publishedAt     DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  deletedAt       DateTime?
+
+  project  Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdByUser User        @relation("ContentCreatedBy", fields: [createdBy], references: [id])
+  updatedByUser User        @relation("ContentUpdatedBy", fields: [updatedBy], references: [id])
+  versions  ContentVersion[]
+
+  @@unique([projectId, slug])
+  @@index([projectId, status])
+  @@index([projectId, deletedAt])
+}
+
+model ContentVersion {
+  id             String   @id @default(cuid())
+  contentId      String
+  version        Int
+  content        String
+  metaTitle      String?
+  metaDescription String?
+  changeNote     String?
+  createdBy      String
+  createdAt      DateTime @default(now())
+
+  content     Content @relation(fields: [contentId], references: [id], onDelete: Cascade)
+  createdByUser User   @relation("ContentVersionCreatedBy", fields: [createdBy], references: [id])
+
+  @@unique([contentId, version])
+  @@index([contentId])
+}
+
+model Competitor {
+  id             String   @id @default(cuid())
+  projectId      String
+  domain         String
+  name           String
+  metrics        Json?
+  lastAnalyzedAt DateTime?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, domain])
+  @@index([projectId])
+}
+
+model AiConversation {
+  id           String   @id @default(cuid())
+  userId       String
+  projectId    String?
+  title        String
+  model        String
+  messageCount Int      @default(0)
+  tokenCount   Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  user     User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project  Project?    @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  messages AiMessage[]
+
+  @@index([userId, updatedAt])
+}
+
+model AiMessage {
+  id             String        @id @default(cuid())
+  conversationId String
+  role           AiMessageRole
+  content        String
+  metadata       Json          @default("{}")
+  tokenCount     Int           @default(0)
+  createdAt      DateTime      @default(now())
+
+  conversation AiConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId, createdAt])
+}
+
+model AiContentGeneration {
+  id           String              @id @default(cuid())
+  userId       String
+  projectId    String
+  type         AiGenerationType
+  status       AiGenerationStatus  @default(pending)
+  prompt       String
+  result       String?
+  model        String
+  inputTokens  Int                 @default(0)
+  outputTokens Int                 @default(0)
+  cost         Float               @default(0)
+  latency      Float?
+  createdAt    DateTime            @default(now())
+  completedAt  DateTime?
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@index([projectId])
+  @@index([status])
+}
+
+model Report {
+  id              String         @id @default(cuid())
+  projectId       String
+  name            String
+  type            ReportType     @default(pdf)
+  status          ReportStatus   @default(generating)
+  config          Json           @default("{}")
+  fileUrl         String?
+  schedule        ReportSchedule @default(none)
+  lastGeneratedAt DateTime?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId])
+  @@index([status])
+}
+
+model Subscription {
+  id                  String             @id @default(cuid())
+  userId              String             @unique
+  plan                PlanType           @default(free)
+  status              SubscriptionStatus @default(active)
+  stripeSubscriptionId String?
+  stripeCustomerId    String?
+  currentPeriodStart  DateTime           @default(now())
+  currentPeriodEnd    DateTime
+  maxProjects         Int                @default(1)
+  maxPagesPerProject  Int                @default(100)
+  maxKeywords         Int                @default(50)
+  aiCredits           Int                @default(10)
+  apiCallsLimit       Int                @default(100)
+  canceledAt          DateTime?
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  invoices Invoice[]
+
+  @@index([plan])
+  @@index([status])
+}
+
+model UsageRecord {
+  id          String    @id @default(cuid())
+  userId      String
+  type        UsageType
+  quantity    Int       @default(1)
+  description String
+  createdAt   DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+  @@index([userId, type, createdAt])
+}
+
+model Invoice {
+  id              String        @id @default(cuid())
+  userId          String
+  subscriptionId  String
+  stripeInvoiceId String?
+  status          InvoiceStatus @default(draft)
+  amount          Float
+  amountPaid      Float         @default(0)
+  tax             Float         @default(0)
+  currency        String        @default("usd")
+  invoiceUrl      String?
+  dueDate         DateTime
+  paidAt          DateTime?
+  createdAt       DateTime      @default(now())
+
+  user         User         @relation(fields: [userId], references: [id])
+  subscription Subscription @relation(fields: [subscriptionId], references: [id])
+
+  @@index([userId])
+  @@index([subscriptionId])
+  @@index([status])
+}
+
+model PaymentMethod {
+  id                   String   @id @default(cuid())
+  userId               String
+  stripePaymentMethodId String
+  type                 String
+  brand                String
+  last4                String
+  expMonth             Int
+  expYear              Int
+  isDefault            Boolean  @default(false)
+  createdAt            DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model ApiKey {
+  id         String    @id @default(cuid())
+  userId     String
+  name       String
+  key        String    @unique
+  permissions String   @default("")
+  lastUsedAt DateTime?
+  expiresAt  DateTime?
+  createdAt  DateTime  @default(now())
+  revokedAt  DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([key])
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String
+  type      NotificationType
+  title     String
+  message   String
+  data      Json?
+  read      Boolean          @default(false)
+  readAt    DateTime?
+  createdAt DateTime         @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, read, createdAt])
+  @@index([createdAt])
+}
+
+model FeatureFlag {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String
+  enabled     Boolean  @default(false)
+  rules       Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  projectId String?
+  action    String
+  entity    String
+  entityId  String
+  before    Json?
+  after     Json?
+  ipAddress String
+  userAgent String
+  createdAt DateTime @default(now())
+
+  user    User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  project Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+
+  @@index([createdAt])
+  @@index([userId])
+  @@index([entity, entityId])
+  @@index([projectId])
+}
