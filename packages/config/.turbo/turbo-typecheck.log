@@ -2,10 +2,3 @@
 > @lade/config@1.0.0 typecheck C:\Users\Girish Lade\OneDrive\Desktop\SEO-tool-AI\packages\config
 > tsc --noEmit
 
-src/errors.ts(1,26): error TS2307: Cannot find module '@lade/shared' or its corresponding type declarations.
-src/errors.ts(14,13): error TS18046: 'error' is of type 'unknown'.
-src/errors.ts(15,16): error TS18046: 'error' is of type 'unknown'.
-src/errors.ts(16,19): error TS18046: 'error' is of type 'unknown'.
-src/errors.ts(17,16): error TS18046: 'error' is of type 'unknown'.
-src/rate-limiter.ts(33,45): error TS6133: 'opts' is declared but its value is never read.
- ELIFECYCLE  Command failed with exit code 2.

@@ -2,3 +2,32 @@
 > @lade/database@1.0.0 typecheck C:\Users\Girish Lade\OneDrive\Desktop\SEO-tool-AI\packages\database
 > tsc --noEmit
 
+src/repositories/ai.repository.ts(125,11): error TS2322: Type 'AiMessageRole | undefined' is not assignable to type 'AiMessageRole'.
+  Type 'undefined' is not assignable to type 'AiMessageRole'.
+src/repositories/ai.repository.ts(157,9): error TS2322: Type 'AiGenerationType | undefined' is not assignable to type 'AiGenerationType'.
+  Type 'undefined' is not assignable to type 'AiGenerationType'.
+src/repositories/ai.repository.ts(228,7): error TS2532: Object is possibly 'undefined'.
+src/repositories/ai.repository.ts(229,7): error TS2532: Object is possibly 'undefined'.
+src/repositories/ai.repository.ts(230,7): error TS2532: Object is possibly 'undefined'.
+src/repositories/analysis.repository.ts(205,9): error TS2322: Type 'IssueCategory | undefined' is not assignable to type 'IssueCategory'.
+  Type 'undefined' is not assignable to type 'IssueCategory'.
+src/repositories/billing.repository.ts(94,42): error TS18048: 'defaults' is possibly 'undefined'.
+src/repositories/billing.repository.ts(95,56): error TS18048: 'defaults' is possibly 'undefined'.
+src/repositories/billing.repository.ts(96,42): error TS18048: 'defaults' is possibly 'undefined'.
+src/repositories/billing.repository.ts(97,38): error TS18048: 'defaults' is possibly 'undefined'.
+src/repositories/billing.repository.ts(98,46): error TS18048: 'defaults' is possibly 'undefined'.
+src/repositories/billing.repository.ts(106,7): error TS2322: Type '{ updatedAt: Date; plan?: string; status?: string; stripeSubscriptionId?: string; stripeCustomerId?: string; currentPeriodStart?: Date; currentPeriodEnd?: Date; maxProjects?: number; maxPagesPerProject?: number; maxKeywords?: number; aiCredits?: number; apiCallsLimit?: number; }' is not assignable to type '(Without<SubscriptionUpdateInput, SubscriptionUncheckedUpdateInput> & SubscriptionUncheckedUpdateInput) | (Without<...> & SubscriptionUpdateInput)'.
+  Type '{ updatedAt: Date; plan?: string; status?: string; stripeSubscriptionId?: string; stripeCustomerId?: string; currentPeriodStart?: Date; currentPeriodEnd?: Date; maxProjects?: number; maxPagesPerProject?: number; maxKeywords?: number; aiCredits?: number; apiCallsLimit?: number; }' is not assignable to type 'Without<SubscriptionUncheckedUpdateInput, SubscriptionUpdateInput> & SubscriptionUpdateInput'.
+    Types of property 'plan' are incompatible.
+      Type 'string | undefined' is not assignable to type 'PlanType | EnumPlanTypeFieldUpdateOperationsInput | undefined'.
+        Type 'string' is not assignable to type 'PlanType | EnumPlanTypeFieldUpdateOperationsInput | undefined'.
+src/repositories/billing.repository.ts(173,9): error TS2322: Type 'UsageType | undefined' is not assignable to type 'UsageType'.
+  Type 'undefined' is not assignable to type 'UsageType'.
+src/repositories/notification.repository.ts(54,9): error TS2322: Type 'NotificationType | undefined' is not assignable to type 'NotificationType'.
+  Type 'undefined' is not assignable to type 'NotificationType'.
+src/repositories/notification.repository.ts(64,7): error TS2322: Type '{ userId: string; type: string; title: string; message: string; data: InputJsonValue; }[]' is not assignable to type 'NotificationCreateManyInput | NotificationCreateManyInput[]'.
+  Type '{ userId: string; type: string; title: string; message: string; data: InputJsonValue; }[]' is not assignable to type 'NotificationCreateManyInput[]'.
+    Type '{ userId: string; type: string; title: string; message: string; data: Prisma.InputJsonValue; }' is not assignable to type 'NotificationCreateManyInput'.
+      Types of property 'type' are incompatible.
+        Type 'string' is not assignable to type 'NotificationType'.
+ ELIFECYCLE  Command failed with exit code 2.
