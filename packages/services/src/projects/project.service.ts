@@ -35,8 +35,8 @@ export class ProjectService {
     const project = await this.projectRepo.create({
       name: data.name,
       domain: data.domain,
-      description: data.description ?? null,
-      settings: data.settings ?? null,
+      description: data.description,
+      settings: data.settings as Record<string, unknown> | undefined,
       userId,
     });
 
@@ -73,7 +73,7 @@ export class ProjectService {
     return this.projectRepo.archive(id) as unknown as Project;
   }
 
-  async restore(id: string, userId: string, userRole: string): Promise<Project> {
+  async restore(id: string, _userId: string, _userRole: string): Promise<Project> {
     return this.projectRepo.restore(id) as unknown as Project;
   }
 

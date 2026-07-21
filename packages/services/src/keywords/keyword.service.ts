@@ -2,7 +2,6 @@ import { KeywordRepository } from '@lade/database';
 import { NotFoundError } from '@lade/shared';
 import type { Keyword, PaginationParams, SearchIntent } from '@lade/shared';
 import { logger } from '@lade/config';
-import type { Prisma } from '@lade/database';
 
 export class KeywordService {
   constructor(private readonly keywordRepo: KeywordRepository) {}
@@ -27,7 +26,7 @@ export class KeywordService {
         difficulty: 0,
         cpc: 0,
         competition: 0,
-        serpFeatures: [] as Prisma.InputJsonValue,
+        serpFeatures: [] as string[],
       }))
     );
     logger.info('Keywords added', { projectId, count: created.count });

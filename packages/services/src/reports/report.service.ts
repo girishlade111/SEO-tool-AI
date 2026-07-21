@@ -26,7 +26,7 @@ export class ReportService {
       name,
       type,
       status: 'generating',
-      config,
+      config: config as Record<string, unknown>,
       schedule: 'none',
     }) as unknown as Report;
   }
@@ -37,7 +37,7 @@ export class ReportService {
       name,
       type,
       status: 'completed',
-      config,
+      config: config as Record<string, unknown>,
       schedule,
     }) as unknown as Report;
   }
