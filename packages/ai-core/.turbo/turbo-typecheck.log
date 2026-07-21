@@ -1,0 +1,36 @@
+
+> @lade/ai-core@1.0.0 typecheck C:\Users\Girish Lade\OneDrive\Desktop\SEO-tool-AI\packages\ai-core
+> tsc --noEmit
+
+src/cost-tracker.ts(3,1): error TS6133: 'logger' is declared but its value is never read.
+src/providers/anthropic.provider.ts(1,38): error TS6196: 'AIMessage' is declared but never used.
+src/providers/anthropic.provider.ts(9,12): error TS2416: Property 'supportedModels' in type 'AnthropicProvider' is not assignable to the same property in base type 'AIProviderInterface'.
+  Type 'string[]' is not assignable to type 'AIModel[]'.
+    Type 'string' is not assignable to type 'AIModel'.
+src/providers/anthropic.provider.ts(26,11): error TS6133: 'config' is declared but its value is never read.
+src/providers/anthropic.provider.ts(44,7): error TS2322: Type 'string' is not assignable to type 'AIProvider'.
+src/providers/anthropic.provider.ts(52,11): error TS6133: 'start' is declared but its value is never read.
+src/providers/anthropic.provider.ts(151,47): error TS2353: Object literal may only specify known properties, and 'status' does not exist in type 'Error'.
+src/providers/openai.provider.ts(9,12): error TS2416: Property 'supportedModels' in type 'OpenAIProvider' is not assignable to the same property in base type 'AIProviderInterface'.
+  Type 'string[]' is not assignable to type 'AIModel[]'.
+    Type 'string' is not assignable to type 'AIModel'.
+src/providers/openai.provider.ts(26,11): error TS6133: 'config' is declared but its value is never read.
+src/providers/openai.provider.ts(42,7): error TS2322: Type 'string' is not assignable to type 'AIProvider'.
+src/providers/openai.provider.ts(50,11): error TS6133: 'start' is declared but its value is never read.
+src/providers/openai.provider.ts(51,11): error TS6133: 'config' is declared but its value is never read.
+src/providers/openai.provider.ts(156,44): error TS2353: Object literal may only specify known properties, and 'status' does not exist in type 'Error'.
+src/providers/provider-registry.ts(12,19): error TS2345: Argument of type 'OpenAIProvider' is not assignable to parameter of type 'AIProviderInterface'.
+  Types of property 'supportedModels' are incompatible.
+    Type 'string[]' is not assignable to type 'AIModel[]'.
+      Type 'string' is not assignable to type 'AIModel'.
+src/providers/provider-registry.ts(13,19): error TS2345: Argument of type 'AnthropicProvider' is not assignable to parameter of type 'AIProviderInterface'.
+  Types of property 'supportedModels' are incompatible.
+    Type 'string[]' is not assignable to type 'AIModel[]'.
+      Type 'string' is not assignable to type 'AIModel'.
+../config/src/errors.ts(1,26): error TS2307: Cannot find module '@lade/shared' or its corresponding type declarations.
+../config/src/errors.ts(14,13): error TS18046: 'error' is of type 'unknown'.
+../config/src/errors.ts(15,16): error TS18046: 'error' is of type 'unknown'.
+../config/src/errors.ts(16,19): error TS18046: 'error' is of type 'unknown'.
+../config/src/errors.ts(17,16): error TS18046: 'error' is of type 'unknown'.
+../config/src/rate-limiter.ts(33,45): error TS6133: 'opts' is declared but its value is never read.
+ ELIFECYCLE  Command failed with exit code 2.
