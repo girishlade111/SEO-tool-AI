@@ -1,7 +1,7 @@
-import type { AIRequest, AIResponse, StreamChunk, AIModel, AIProviderConfig } from '../types';
+import type { AIRequest, AIResponse, StreamChunk, AIModel, AIProvider, AIProviderConfig } from '../types';
 
 export interface AIProviderInterface {
-  readonly name: string;
+  readonly name: AIProvider;
   readonly supportedModels: AIModel[];
 
   initialize(config: AIProviderConfig): void;
