@@ -371,12 +371,16 @@ sequenceDiagram
 │   │
 │   ├── ai-core/                      # AI infrastructure
 │   │   ├── src/
-│   │   │   ├── provider-router.ts
-│   │   │   ├── streaming-handler.ts
-│   │   │   ├── token-tracker.ts
-│   │   │   ├── cost-calculator.ts
+│   │   │   ├── providers/
+│   │   │   │   ├── ai-provider.interface.ts
+│   │   │   │   ├── openai.provider.ts
+│   │   │   │   └── anthropic.provider.ts
+│   │   │   ├── prompts/
+│   │   │   │   └── templates.ts
+│   │   │   ├── model-registry.ts
+│   │   │   ├── cost-tracker.ts
 │   │   │   ├── prompt-manager.ts
-│   │   │   └── types.ts
+│   │   │   └── index.ts
 │   │   └── package.json
 │   │
 │   └── config/                       # Shared configuration
