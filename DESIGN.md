@@ -1109,10 +1109,9 @@ flowchart TD
     end
     
     subgraph "AI Providers"
-        OpenAI[OpenAI GPT-4o]
-        Anthropic[Anthropic Claude]
-        Google[Google Gemini]
-        Local[Local Model / Ollama]
+        OpenAI[OpenAI GPT-4o / GPT-4o-mini]
+        Anthropic[Anthropic Claude 3.5 Sonnet / Haiku]
+        Perplexity[Perplexity Sonar]
     end
     
     subgraph "Prompt Templates"
