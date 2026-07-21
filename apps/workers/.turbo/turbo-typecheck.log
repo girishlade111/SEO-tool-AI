@@ -37,25 +37,10 @@ src/index.ts(13,41): error TS2345: Argument of type '(job: Job<{ userId: string;
       Type 'unknown' is not assignable to type '{ userId: string; period: string; }'.
 src/queue.ts(2,29): error TS6196: 'JobStatus' is declared but never used.
 src/queue.ts(80,36): error TS2353: Object literal may only specify known properties, and 'id' does not exist in type 'Error'.
-../../packages/services/src/analysis/analysis.service.ts(3,57): error TS6196: 'AnalysisSummary' is declared but never used.
-../../packages/services/src/analysis/analysis.service.ts(21,7): error TS2322: Type 'null' is not assignable to type 'number | undefined'.
-../../packages/services/src/content/content.service.ts(16,5): error TS2322: Type '{ _count: { versions: number; }; createdByUser: { name: string; email: string; id: string; }; updatedByUser: { name: string; email: string; id: string; }; } & { type: ContentType; status: ContentStatus; ... 15 more ...; publishedAt: Date | null; }' is not assignable to type 'Content'.
-  Types of property 'content' are incompatible.
-    Type 'string | null' is not assignable to type 'string'.
-      Type 'null' is not assignable to type 'string'.
 ../../packages/services/src/content/content.service.ts(42,7): error TS2322: Type 'string | null' is not assignable to type 'string | undefined'.
   Type 'null' is not assignable to type 'string | undefined'.
-../../packages/services/src/content/content.service.ts(53,11): error TS6133: 'content' is declared but its value is never read.
-../../packages/services/src/content/content.service.ts(68,7): error TS2353: Object literal may only specify known properties, and 'version' does not exist in type 'CreateVersionData'.
-../../packages/services/src/keywords/keyword.service.ts(5,15): error TS2724: '"@lade/database"' has no exported member named 'Prisma'. Did you mean 'prisma'?
-../../packages/services/src/projects/project.service.ts(38,7): error TS2322: Type 'string | null' is not assignable to type 'string | undefined'.
-  Type 'null' is not assignable to type 'string | undefined'.
-../../packages/services/src/projects/project.service.ts(39,7): error TS2322: Type 'Partial<ProjectSettings> | null' is not assignable to type 'Record<string, unknown> | undefined'.
-  Type 'null' is not assignable to type 'Record<string, unknown> | undefined'.
-../../packages/services/src/projects/project.service.ts(76,29): error TS6133: 'userId' is declared but its value is never read.
-../../packages/services/src/projects/project.service.ts(76,45): error TS6133: 'userRole' is declared but its value is never read.
-../../packages/services/src/reports/report.service.ts(29,7): error TS2322: Type 'ReportConfig' is not assignable to type 'Record<string, unknown>'.
+../../packages/services/src/reports/report.service.ts(29,15): error TS2352: Conversion of type 'ReportConfig' to type 'Record<string, unknown>' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
   Index signature for type 'string' is missing in type 'ReportConfig'.
-../../packages/services/src/reports/report.service.ts(40,7): error TS2322: Type 'ReportConfig' is not assignable to type 'Record<string, unknown>'.
+../../packages/services/src/reports/report.service.ts(40,15): error TS2352: Conversion of type 'ReportConfig' to type 'Record<string, unknown>' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
   Index signature for type 'string' is missing in type 'ReportConfig'.
  ELIFECYCLE  Command failed with exit code 2.
