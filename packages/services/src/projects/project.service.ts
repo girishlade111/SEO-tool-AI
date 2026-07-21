@@ -19,8 +19,8 @@ export class ProjectService {
     if (!project || project.deletedAt) {
       throw new NotFoundError('Project', id);
     }
-    this.ensureAccess(project, userId, userRole);
-    return project;
+    this.ensureAccess(project as unknown as Project, userId, userRole);
+    return project as unknown as Project;
   }
 
   async create(
@@ -42,7 +42,7 @@ export class ProjectService {
 
     await this.projectRepo.addMember(project.id, userId, 'owner');
     logger.info('Project created', { projectId: project.id, userId });
-    return project;
+    return project as unknown as Project;
   }
 
   async update(id: string, userId: string, userRole: string, data: Record<string, unknown>): Promise<Project> {
@@ -51,7 +51,7 @@ export class ProjectService {
       this.getUserRole(project, userId, userRole),
       'project:update'
     );
-    return this.projectRepo.update(id, data);
+    return this.projectRepo.update(id, data) as unknown as Project;
   }
 
   async delete(id: string, userId: string, userRole: string): Promise<void> {
@@ -70,11 +70,11 @@ export class ProjectService {
       this.getUserRole(project, userId, userRole),
       'project:archive'
     );
-    return this.projectRepo.archive(id);
+    return this.projectRepo.archive(id) as unknown as Project;
   }
 
   async restore(id: string, userId: string, userRole: string): Promise<Project> {
-    return this.projectRepo.restore(id);
+    return this.projectRepo.restore(id) as unknown as Project;
   }
 
   async addMember(projectId: string, userId: string, userRole: string, memberEmail: string, memberRole: ProjectMemberRole) {

@@ -1,7 +1,6 @@
 import { ReportRepository } from '@lade/database';
 import { NotFoundError } from '@lade/shared';
 import type { Report, PaginationParams, ReportType, ReportSchedule, ReportConfig } from '@lade/shared';
-import { logger } from '@lade/config';
 
 export class ReportService {
   constructor(private readonly reportRepo: ReportRepository) {}
@@ -13,7 +12,7 @@ export class ReportService {
   async getById(id: string): Promise<Report> {
     const report = await this.reportRepo.findById(id);
     if (!report) throw new NotFoundError('Report', id);
-    return report;
+    return report as unknown as Report;
   }
 
   async generate(
@@ -29,7 +28,7 @@ export class ReportService {
       status: 'generating',
       config,
       schedule: 'none',
-    });
+    }) as unknown as Report;
   }
 
   async schedule(projectId: string, name: string, type: ReportType, config: ReportConfig, schedule: ReportSchedule) {
@@ -40,7 +39,7 @@ export class ReportService {
       status: 'completed',
       config,
       schedule,
-    });
+    }) as unknown as Report;
   }
 
   async delete(id: string): Promise<void> {
