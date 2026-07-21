@@ -1125,8 +1125,7 @@ flowchart TD
     AIService --> ProviderRouter
     ProviderRouter --> OpenAI
     ProviderRouter --> Anthropic
-    ProviderRouter --> Google
-    ProviderRouter --> Local
+    ProviderRouter --> Perplexity
     AIService --> PromptManager
     PromptManager --> AuditPrompt
     PromptManager --> ContentGen
