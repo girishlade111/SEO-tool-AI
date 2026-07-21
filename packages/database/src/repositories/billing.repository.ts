@@ -9,6 +9,7 @@ export interface CreateSubscriptionData {
   stripeSubscriptionId?: string;
   stripeCustomerId?: string;
   currentPeriodEnd: Date;
+  currentPeriodStart?: Date;
   maxProjects?: number;
   maxPagesPerProject?: number;
   maxKeywords?: number;

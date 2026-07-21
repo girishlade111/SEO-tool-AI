@@ -6,6 +6,10 @@ export interface CreateAnalysisData {
   projectId: string;
   type?: 'full' | 'quick' | 'scheduled';
   trigger?: 'manual' | 'scheduled' | 'webhook';
+  status?: 'queued' | 'running' | 'completed' | 'failed';
+  pagesAnalyzed?: number;
+  issuesFound?: number;
+  overallScore?: number;
 }
 
 export interface UpdateAnalysisData {
