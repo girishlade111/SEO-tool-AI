@@ -8,7 +8,7 @@ const analysisRepo = new AnalysisRepository();
 export async function handleReportGeneration(job: Job<{ reportId: string; projectId: string; type: string }>): Promise<void> {
   logger.info('Generating report', { reportId: job.data.reportId });
 
-  const analyses = await analysisRepo.findByProjectId(job.data.projectId, { page: 1, pageSize: 10 });
+  const analyses = await analysisRepo.findByProjectId(job.data.projectId, { page: 1, pageSize: 10 }) as { data: Array<Record<string, unknown>> };
   const latestAnalysis = analyses.data?.[0];
 
   if (!latestAnalysis) {
@@ -20,9 +20,9 @@ export async function handleReportGeneration(job: Job<{ reportId: string; projec
     projectName: 'Project',
     domain: '',
     period: 'Last 30 days',
-    findings: JSON.stringify({ pagesAnalyzed: latestAnalysis.pagesAnalyzed, issuesFound: latestAnalysis.issuesFound }),
+    findings: JSON.stringify({ pagesAnalyzed: latestAnalysis.pagesAnalyzed as number, issuesFound: latestAnalysis.issuesFound as number }),
     issues: '[]',
-    metrics: JSON.stringify({ score: latestAnalysis.overallScore }),
+    metrics: JSON.stringify({ score: latestAnalysis.overallScore as number | undefined }),
   });
 
   try {
