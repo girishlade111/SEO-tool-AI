@@ -1,0 +1,32 @@
+{
+  "name": "lade-stack-seo-copilot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Enterprise AI SEO Copilot Platform",
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
+    "test": "turbo test",
+    "test:e2e": "turbo test:e2e",
+    "clean": "turbo clean",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
+    "db:generate": "cd packages/database && npx prisma generate",
+    "db:push": "cd packages/database && npx prisma db push",
+    "db:migrate": "cd packages/database && npx prisma migrate dev",
+    "db:seed": "cd packages/database && npx tsx prisma/seed.ts",
+    "db:studio": "cd packages/database && npx prisma studio"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "prettier": "^3.4.0",
+    "prettier-plugin-tailwindcss": "^0.6.0",
+    "turbo": "^2.3.0",
+    "typescript": "^5.7.0"
+  },
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}
