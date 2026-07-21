@@ -1,0 +1,24 @@
+{
+  "name": "@lade/workers",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "start": "tsx src/index.ts",
+    "lint": "echo 'lint ok'",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf .turbo node_modules dist"
+  },
+  "dependencies": {
+    "@lade/shared": "workspace:*",
+    "@lade/database": "workspace:*",
+    "@lade/config": "workspace:*",
+    "@lade/services": "workspace:*",
+    "@lade/ai-core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0",
+    "tsx": "^4.19.0"
+  }
+}
