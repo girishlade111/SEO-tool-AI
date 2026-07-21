@@ -1,6 +1,6 @@
 import { BaseRepository } from './base.repository';
 import type { PaginationParams, PaginatedResult } from './user.repository';
-import type { Prisma } from '@prisma/client';
+import type { Prisma, $Enums } from '@prisma/client';
 
 export interface CreateSubscriptionData {
   userId: string;
@@ -74,20 +74,13 @@ export class BillingRepository extends BaseRepository {
   }
 
   createSubscription(data: CreateSubscriptionData) {
-    const planDefaults: Record<string, { maxProjects: number; maxPagesPerProject: number; maxKeywords: number; aiCredits: number; apiCallsLimit: number }> = {
-      free: { maxProjects: 1, maxPagesPerProject: 100, maxKeywords: 50, aiCredits: 10, apiCallsLimit: 100 },
-      pro: { maxProjects: 10, maxPagesPerProject: 5000, maxKeywords: 1000, aiCredits: 500, apiCallsLimit: 10000 },
-      business: { maxProjects: 50, maxPagesPerProject: 50000, maxKeywords: 10000, aiCredits: 5000, apiCallsLimit: 100000 },
-      enterprise: { maxProjects: -1, maxPagesPerProject: -1, maxKeywords: -1, aiCredits: -1, apiCallsLimit: -1 },
-    };
-
-    const defaults = planDefaults[data.plan] ?? planDefaults.free;
+    const defaults = this.getPlanDefaults(data.plan as $Enums.PlanType);
 
     return this.prisma.subscription.create({
       data: {
         userId: data.userId,
-        plan: data.plan as Prisma.EnumPlanTypeFilter['equals'],
-        status: data.status as Prisma.EnumSubscriptionStatusFilter['equals'] ?? 'active',
+        plan: data.plan as $Enums.PlanType,
+        status: (data.status ?? 'active') as $Enums.SubscriptionStatus,
         stripeSubscriptionId: data.stripeSubscriptionId,
         stripeCustomerId: data.stripeCustomerId,
         currentPeriodEnd: data.currentPeriodEnd,
@@ -104,7 +97,17 @@ export class BillingRepository extends BaseRepository {
     return this.prisma.subscription.update({
       where: { id },
       data: {
-        ...data,
+        plan: data.plan as $Enums.PlanType | undefined,
+        status: data.status as $Enums.SubscriptionStatus | undefined,
+        stripeSubscriptionId: data.stripeSubscriptionId,
+        stripeCustomerId: data.stripeCustomerId,
+        currentPeriodStart: data.currentPeriodStart,
+        currentPeriodEnd: data.currentPeriodEnd,
+        maxProjects: data.maxProjects,
+        maxPagesPerProject: data.maxPagesPerProject,
+        maxKeywords: data.maxKeywords,
+        aiCredits: data.aiCredits,
+        apiCallsLimit: data.apiCallsLimit,
         updatedAt: this.now(),
       },
     });
@@ -170,7 +173,7 @@ export class BillingRepository extends BaseRepository {
     return this.prisma.usageRecord.create({
       data: {
         userId: data.userId,
-        type: data.type as Prisma.EnumUsageTypeFilter['equals'],
+        type: data.type as $Enums.UsageType,
         quantity: data.quantity ?? 1,
         description: data.description ?? '',
       },
