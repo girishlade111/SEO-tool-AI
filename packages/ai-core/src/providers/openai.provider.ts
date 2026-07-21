@@ -23,8 +23,6 @@ export class OpenAIProvider implements AIProviderInterface {
 
   async generate(request: AIRequest): Promise<AIResponse> {
     const start = Date.now();
-    const config = getModelConfig(request.model);
-
     const body = this.buildRequestBody(request, false);
     const response = await this.fetch('/chat/completions', body);
     const data = await response.json();
@@ -47,8 +45,6 @@ export class OpenAIProvider implements AIProviderInterface {
   }
 
   async *stream(request: AIRequest): AsyncGenerator<StreamChunk> {
-    const start = Date.now();
-    const config = getModelConfig(request.model);
     const body = this.buildRequestBody(request, true);
 
     const response = await this.fetch('/chat/completions', body);
@@ -153,7 +149,7 @@ export class OpenAIProvider implements AIProviderInterface {
 
       if (!response.ok) {
         const errorBody = await response.text().catch(() => '');
-        logger.error('OpenAI API error', { status: response.status, body: errorBody });
+        logger.error('OpenAI API error', new Error(`Status ${response.status}`), { status: response.status, body: errorBody });
         throw new Error(`OpenAI API error: ${response.status} ${response.statusText}`);
       }
 

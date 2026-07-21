@@ -1,4 +1,4 @@
-import type { AIRequest, AIResponse, AIMessage, StreamChunk, AIProvider, AIModel } from '../types';
+import type { AIRequest, AIResponse, StreamChunk, AIProvider, AIModel } from '../types';
 import type { AIProviderInterface } from './provider.interface';
 import { getModelConfig } from '../models';
 import { costTracker } from '../cost-tracker';
@@ -23,8 +23,6 @@ export class AnthropicProvider implements AIProviderInterface {
 
   async generate(request: AIRequest): Promise<AIResponse> {
     const start = Date.now();
-    const config = getModelConfig(request.model);
-
     const body = this.buildRequestBody(request, false);
     const response = await this.fetch('/messages', body);
     const data = await response.json();
@@ -49,7 +47,6 @@ export class AnthropicProvider implements AIProviderInterface {
   }
 
   async *stream(request: AIRequest): AsyncGenerator<StreamChunk> {
-    const start = Date.now();
     const body = this.buildRequestBody(request, true);
 
     const response = await this.fetch('/messages', body);
@@ -148,7 +145,7 @@ export class AnthropicProvider implements AIProviderInterface {
 
       if (!response.ok) {
         const errorBody = await response.text().catch(() => '');
-        logger.error('Anthropic API error', { status: response.status, body: errorBody });
+        logger.error('Anthropic API error', new Error(`Status ${response.status}`), { status: response.status, body: errorBody });
         throw new Error(`Anthropic API error: ${response.status} ${response.statusText}`);
       }
 
