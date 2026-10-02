@@ -250,3 +250,9 @@ pnpm --filter @lade/workers start
 ## License
 
 Private — All rights reserved.
+
+---
+
+## Credits
+
+Built by **Girish Lade** — [ladestack.in](https://ladestack.in)
